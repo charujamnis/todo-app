@@ -6,18 +6,18 @@ import TodoApp from './components/todo/TodoApp'
 import Counter  from './components/counter/Counter'
 import './App.css';
 
-
 class App extends Component {
   
   render() {
     return (
       <div className="App">
-        {/*<Counter/>*/} 
+        {/*<Counter/>*/}
         <TodoApp/>
       </div>
     );
   }
 }
+
 
 class LearningComponents extends Component {
   render() {
