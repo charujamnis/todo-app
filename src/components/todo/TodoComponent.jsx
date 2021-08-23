@@ -10,7 +10,7 @@ class TodoComponent extends Component{
 
     this.state={
       id: this.props.match.params.id,
-      description : 'Learn Forms Now',
+      description : '',
       targetDate : moment(new Date()).format('YYYY-MM-DD')
     }
     this.onSubmit =this.onSubmit.bind(this)
@@ -18,16 +18,28 @@ class TodoComponent extends Component{
   }
 
   onSubmit(values){
-   
-    console.log(values)
-    
+    let username =AuthenticationService.getLoggedInUser();
+    let todo={
+      id:this.state.id,
+      description : values.description,
+      targetDate : values.targetDate
+    }
+
+    if(this.state.id===-1) {  
+      TodoDataService.createTodo(username,this.state.id,todo)
+        .then(()=>this.props.history.push('/todos'))}
+    else{
+    TodoDataService.updateTodo(username,this.state.id,todo)
+        .then(()=>{this.props.history.push('/todos')}) 
   }
+}
 
   componentDidMount(){
+    if(this.state.id===-1) {return}
     let username =AuthenticationService.getLoggedInUser();
     TodoDataService.retrieveTodo(username,this.state.id)
     .then(response=>this.setState({
-        description:response.data.description,
+       description:response.data.description,
         targetDate: moment(response.data.targetDate).format('YYYY-MM-DD')
     }))
   }
@@ -52,8 +64,9 @@ class TodoComponent extends Component{
     return(
       <div>
          <h1>Todo</h1>
-         <div class="container">
-           <Formik initialValues={{description,targetDate}} 
+         <div className="container">
+           <Formik 
+            initialValues={{description,targetDate}} 
             onSubmit={this.onSubmit}
             validate={this.validate}
             validateOnChange={false}

@@ -22,6 +22,7 @@ class ListTodosComponent extends Component{
     this.deleteTodoClicked=this.deleteTodoClicked.bind(this)
     this.updateTodoClicked=this.updateTodoClicked.bind(this)
     this.refreshTodos=this.refreshTodos.bind(this)
+    this.addTodoClicked=this.addTodoClicked.bind(this)
   }
   
   //Get all todos for the particular user after constructor/first render is called.
@@ -43,10 +44,15 @@ class ListTodosComponent extends Component{
   }
 
   updateTodoClicked(id){
-    console.log('update '+id)
-    this.props.history.push(`todos/${id}`) //redirect to different route.
+    //console.log('update '+id)
+    this.props.history.push(`/todos/${id}`) //redirect to different route.
   }
 
+  addTodoClicked(){
+  
+    //console.log('update '+id)
+    this.props.history.push(`/todos/-1`) //redirect to different route.
+  }
   deleteTodoClicked(id){
     let username=AutenticationService.getLoggedInUser()
     //console.log(id+" "+username)
@@ -91,6 +97,9 @@ class ListTodosComponent extends Component{
                   }
                 </tbody>
               </table>
+              <div className="row"> 
+                  <button className="btn btn-success" onClick={this.addTodoClicked}>Add</button>
+              </div>
               </div>
            </div>
     );
