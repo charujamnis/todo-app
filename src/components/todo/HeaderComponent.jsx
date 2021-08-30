@@ -1,10 +1,14 @@
 import React , {Component} from 'react'
+import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom'
 import AutenticationService from './AuthenticationService.js'
+import TodoDataService from '../../api/todo/TodoDataService.js'
 
 class HeaderComponent extends Component{
   render(){
     const isUserLoggedIn=AutenticationService.isUserLoggedIn()
+    console.log('header componennt')
+    console.log(isUserLoggedIn)
     return(
         <header>
          <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -23,4 +27,4 @@ class HeaderComponent extends Component{
   }
 }
 
-export default HeaderComponent
+export default withRouter(HeaderComponent);

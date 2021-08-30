@@ -15,10 +15,12 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
     protected void configure(HttpSecurity http) throws Exception {
         //copied this method from WebSecurityConfigurerAdapter class
         http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
+
         http.authorizeRequests((requests) -> {
             ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)requests.anyRequest()).authenticated();
         });
         http.httpBasic();
+        http.headers().frameOptions().disable();  //for h2-console on web browser
        // http.formLogin();
 
     }
